@@ -1,0 +1,34 @@
+﻿<Window x:Class="WPF.Controls.IntUpDownDemo.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:c="clr-namespace:WPF.Controls"
+        xmlns:local="clr-namespace:WPF.Controls.IntUpDownDemo"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="300" Width="400">
+    <Window.Resources>
+        <local:IntToStringConverter x:Key="IntToStringConverter"/>
+    </Window.Resources>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="50"/>
+            <ColumnDefinition Width="50"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="24"/>
+            <RowDefinition Height="5"/>
+            <RowDefinition Height="24"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <c:IntUpDown x:Name="IntUpDown" Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="1"
+                     Value="6"
+                     MinValue="0"
+                     MaxValue="10" />
+        <TextBlock Grid.Column="1" Grid.Row="3" Text="Value" VerticalAlignment="Center"/>
+        <TextBlock Grid.Column="2" Grid.Row="3" Text="{Binding ElementName=IntUpDown, Path=Value, Converter={StaticResource IntToStringConverter}}" VerticalAlignment="Center"/>
+    </Grid>
+</Window>
