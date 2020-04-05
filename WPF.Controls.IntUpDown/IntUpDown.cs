@@ -408,6 +408,8 @@ namespace WPF.Controls
 
         private int ClampValue(int value)
         {
+            if (!ClampValueToMinMax)
+                return value;
             if (value < MinValue)
                 return MinValue;
             else if (value > MaxValue)
