@@ -138,7 +138,7 @@ namespace WPF.Controls
         #region MaxValue
 
         public static readonly DependencyProperty MaxValueProperty
-            = DependencyProperty.Register(nameof(MaxValue), typeof(int), typeof(IntUpDown), new UIPropertyMetadata(default(int), OnMaxValueChanged));
+            = DependencyProperty.Register(nameof(MaxValue), typeof(int), typeof(IntUpDown), new UIPropertyMetadata(int.MaxValue, OnMaxValueChanged));
 
         public int MaxValue
         {
@@ -163,7 +163,7 @@ namespace WPF.Controls
         #region MinValue
 
         public static readonly DependencyProperty MinValueProperty
-            = DependencyProperty.Register(nameof(MinValue), typeof(int), typeof(IntUpDown), new UIPropertyMetadata(default(int), OnMinValueChanged));
+            = DependencyProperty.Register(nameof(MinValue), typeof(int), typeof(IntUpDown), new UIPropertyMetadata(int.MinValue, OnMinValueChanged));
 
         public int MinValue
         {
@@ -188,7 +188,7 @@ namespace WPF.Controls
         #region Value
 
         public static readonly DependencyProperty ValueProperty
-            = DependencyProperty.Register(nameof(Value), typeof(int), typeof(IntUpDown), new UIPropertyMetadata(default(int), OnValueChanged));
+            = DependencyProperty.Register(nameof(Value), typeof(int), typeof(IntUpDown), new FrameworkPropertyMetadata(default(int), OnValueChanged) { BindsTwoWayByDefault = true });
 
         public int Value
         {
