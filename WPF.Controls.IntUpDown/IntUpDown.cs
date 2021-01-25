@@ -62,6 +62,20 @@ namespace WPF.Controls
 
         #endregion //TextAlignment
 
+        #region TextBoxVisibility
+
+        public static readonly DependencyProperty TextBoxVisibilityProperty
+            = DependencyProperty.Register(nameof(TextBoxVisibility), typeof(Visibility), typeof(IntUpDown), new UIPropertyMetadata(Visibility.Visible));
+
+        public Visibility TextBoxVisibility
+        {
+            get => (Visibility)GetValue(TextBoxVisibilityProperty); 
+            set => SetValue(TextBoxVisibilityProperty, value);
+        }
+
+
+        #endregion //TextBoxVisibility
+
         #endregion //Proxy properties
 
         #region Properties
@@ -188,7 +202,8 @@ namespace WPF.Controls
         #region Value
 
         public static readonly DependencyProperty ValueProperty
-            = DependencyProperty.Register(nameof(Value), typeof(int), typeof(IntUpDown), new FrameworkPropertyMetadata(default(int), OnValueChanged) { BindsTwoWayByDefault = true });
+            = DependencyProperty.Register(nameof(Value), typeof(int), typeof(IntUpDown), new UIPropertyMetadata(default(int), OnValueChanged));
+        //= DependencyProperty.Register(nameof(Value), typeof(int), typeof(IntUpDown), new FrameworkPropertyMetadata(default(int), OnValueChanged) { BindsTwoWayByDefault = true });
 
         public int Value
         {
@@ -338,6 +353,10 @@ namespace WPF.Controls
 
         protected void OnIncrement()
         {
+            var expr = GetBindingExpression(ValueProperty);
+            var expr1 = GetBindingExpression(MinValueProperty);
+            var expr2 = GetBindingExpression(MaxValueProperty);
+
             var result = IncrementValue(Value, Step);
             Value = ClampValue(result);
             TextBox.Text = ConvertValueToText(Value);
