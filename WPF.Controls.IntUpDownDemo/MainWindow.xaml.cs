@@ -27,11 +27,25 @@ namespace WPF.Controls.IntUpDownDemo
             return false;
         }
 
-        private int _value;
+        private int _value=3;
         public int Value
         {
             get => _value;
             set => SetProperty(ref _value, value);
+        }
+
+        private int _minValue=1;
+        public int MinValue
+        {
+            get => _minValue;
+            set => SetProperty(ref _minValue, value);
+        }
+
+        private int _maxValue=9;
+        public int MaxValue
+        {
+            get => _maxValue;
+            set => SetProperty(ref _maxValue, value);
         }
 
         public MainWindow()

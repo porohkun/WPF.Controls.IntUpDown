@@ -26,8 +26,8 @@
         </Grid.RowDefinitions>
         <c:IntUpDown x:Name="IntUpDown" Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="1"
                      Value="{Binding Value}"
-                     MinValue="0"
-                     MaxValue="10" />
+                     MinValue="{Binding MinValue}"
+                     MaxValue="{Binding MaxValue}" />
         <TextBlock Grid.Column="1" Grid.Row="3" Text="Value" VerticalAlignment="Center"/>
         <TextBlock Grid.Column="2" Grid.Row="3" Text="{Binding Value}" VerticalAlignment="Center"/>
     </Grid>
