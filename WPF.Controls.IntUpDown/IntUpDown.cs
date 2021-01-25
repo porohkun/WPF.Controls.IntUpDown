@@ -93,7 +93,7 @@ namespace WPF.Controls
 
         private static void OnAllowTextInputChanged(DependencyObject source, DependencyPropertyChangedEventArgs args)
         {
-            if (source is IntUpDown s)
+            if (source is IntUpDown s && s.IsInitialized)
                 s.OnAllowTextInputChanged((bool)args.OldValue, (bool)args.NewValue);
         }
 
@@ -116,7 +116,7 @@ namespace WPF.Controls
 
         private static void OnIsReadOnlyChanged(DependencyObject source, DependencyPropertyChangedEventArgs args)
         {
-            if (source is IntUpDown s)
+            if (source is IntUpDown s && s.IsInitialized)
                 s.OnIsReadOnlyChanged((bool)args.OldValue, (bool)args.NewValue);
         }
 
@@ -139,7 +139,7 @@ namespace WPF.Controls
 
         private static void OnClipValueToMinMaxChanged(DependencyObject source, DependencyPropertyChangedEventArgs args)
         {
-            if (source is IntUpDown s)
+            if (source is IntUpDown s && s.IsInitialized)
                 s.OnClipValueToMinMaxChanged((bool)args.OldValue, (bool)args.NewValue);
         }
 
@@ -152,7 +152,7 @@ namespace WPF.Controls
         #region MaxValue
 
         public static readonly DependencyProperty MaxValueProperty
-            = DependencyProperty.Register(nameof(MaxValue), typeof(int), typeof(IntUpDown), new FrameworkPropertyMetadata(int.MaxValue, OnMaxValueChanged) { BindsTwoWayByDefault = true });
+            = DependencyProperty.Register(nameof(MaxValue), typeof(int), typeof(IntUpDown), new UIPropertyMetadata(int.MaxValue, OnMaxValueChanged));
 
         public int MaxValue
         {
@@ -162,7 +162,7 @@ namespace WPF.Controls
 
         private static void OnMaxValueChanged(DependencyObject source, DependencyPropertyChangedEventArgs args)
         {
-            if (source is IntUpDown s)
+            if (source is IntUpDown s && s.IsInitialized)
                 s.OnMaxValueChanged((int)args.OldValue, (int)args.NewValue);
         }
 
@@ -177,7 +177,7 @@ namespace WPF.Controls
         #region MinValue
 
         public static readonly DependencyProperty MinValueProperty
-            = DependencyProperty.Register(nameof(MinValue), typeof(int), typeof(IntUpDown), new FrameworkPropertyMetadata(int.MinValue, OnMinValueChanged) { BindsTwoWayByDefault = true });
+            = DependencyProperty.Register(nameof(MinValue), typeof(int), typeof(IntUpDown), new UIPropertyMetadata(int.MinValue, OnMinValueChanged));
 
         public int MinValue
         {
@@ -187,7 +187,7 @@ namespace WPF.Controls
 
         private static void OnMinValueChanged(DependencyObject source, DependencyPropertyChangedEventArgs args)
         {
-            if (source is IntUpDown s)
+            if (source is IntUpDown s && s.IsInitialized)
                 s.OnMinValueChanged((int)args.OldValue, (int)args.NewValue);
         }
 
@@ -202,7 +202,7 @@ namespace WPF.Controls
         #region Value
 
         public static readonly DependencyProperty ValueProperty
-            = DependencyProperty.Register(nameof(Value), typeof(int), typeof(IntUpDown), new FrameworkPropertyMetadata(default(int), OnValueChanged) { BindsTwoWayByDefault = true });
+        = DependencyProperty.Register(nameof(Value), typeof(int), typeof(IntUpDown), new FrameworkPropertyMetadata(default(int), OnValueChanged) { BindsTwoWayByDefault = true });
 
         public int Value
         {
@@ -212,7 +212,7 @@ namespace WPF.Controls
 
         private static void OnValueChanged(DependencyObject source, DependencyPropertyChangedEventArgs args)
         {
-            if (source is IntUpDown s)
+            if (source is IntUpDown s && s.IsInitialized)
                 s.OnValueChanged((int)args.OldValue, (int)args.NewValue);
         }
 
@@ -241,10 +241,10 @@ namespace WPF.Controls
             set => SetValue(StepProperty, value);
         }
 
-        private static void OnStepChanged(DependencyObject o, DependencyPropertyChangedEventArgs e)
+        private static void OnStepChanged(DependencyObject source, DependencyPropertyChangedEventArgs args)
         {
-            if (o is IntUpDown intUpDown)
-                intUpDown.OnStepChanged((int)e.OldValue, (int)e.NewValue);
+            if (source is IntUpDown s && s.IsInitialized)
+                s.OnStepChanged((int)args.OldValue, (int)args.NewValue);
         }
 
         protected virtual void OnStepChanged(int oldValue, int newValue)
@@ -352,6 +352,10 @@ namespace WPF.Controls
 
         protected void OnIncrement()
         {
+            var expr = GetBindingExpression(ValueProperty);
+            var expr1 = GetBindingExpression(MinValueProperty);
+            var expr2 = GetBindingExpression(MaxValueProperty);
+
             var result = IncrementValue(Value, Step);
             Value = ClampValue(result);
             TextBox.Text = ConvertValueToText(Value);
