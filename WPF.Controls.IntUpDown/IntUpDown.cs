@@ -199,6 +199,16 @@ namespace WPF.Controls
 
         #endregion //MinValue
 
+        #region StringValue
+
+        public string StringValue
+        {
+            get => ConvertValueToText(Value);
+            set => Value = ConvertTextToValue(value);
+        }
+
+        #endregion //StringValue
+
         #region Value
 
         public static readonly DependencyProperty ValueProperty
@@ -293,6 +303,14 @@ namespace WPF.Controls
                 TextBox.PreviewMouseLeftButtonDown += TextBox_SelectivelyIgnoreMouseButton;
                 TextBox.GotKeyboardFocus += TextBox_SelectAllText;
                 TextBox.MouseDoubleClick += TextBox_SelectAllText;
+                
+                TextBox.SetBinding(TextBox.TextProperty, new Binding()
+                {
+                    Path = new PropertyPath(nameof(StringValue)),
+                    Mode = BindingMode.TwoWay,
+                    Source = this,
+                    UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged
+                });
             }
 
 
@@ -314,19 +332,6 @@ namespace WPF.Controls
 
             if (DecrementButton != null)
                 DecrementButton.Click += DecrementButton_Clicked;
-        }
-
-        protected override void OnKeyDown(KeyEventArgs e)
-        {
-            switch (e.Key)
-            {
-                case Key.Enter:
-                    {
-                        CommitInput();
-                        e.Handled = true;
-                        break;
-                    }
-            }
         }
 
         #endregion //Base Class Overrides
